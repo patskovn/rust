@@ -94,6 +94,7 @@ fn test_opts(config: &Config) -> test::TestOpts {
         run_ignored: if config.run_ignored { test::RunIgnored::Yes } else { test::RunIgnored::No },
         format: config.format.to_libtest(),
         logfile: None,
+        test_results_file: None,
         run_tests: true,
         bench_benchmarks: true,
         nocapture: config.nocapture,
