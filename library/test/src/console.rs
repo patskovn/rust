@@ -172,7 +172,7 @@ impl ConsoleTestState {
 
 // List the tests to console, and optionally to logfile. Filters are honored.
 pub(crate) fn list_tests_console(opts: &TestOpts, tests: Vec<TestDescAndFn>) -> io::Result<()> {
-    let output = build_output(&opts.test_results_file)?;
+    let output = build_test_output(&opts.test_results_file)?;
     let mut out: Box<dyn OutputFormatter> = match opts.format {
         OutputFormat::Pretty | OutputFormat::Junit => {
             Box::new(PrettyFormatter::new(output, false, 0, false, None))
@@ -208,7 +208,7 @@ pub(crate) fn list_tests_console(opts: &TestOpts, tests: Vec<TestDescAndFn>) -> 
     out.write_discovery_finish(&st)
 }
 
-pub(crate) fn build_output(
+pub(crate) fn build_test_output(
     test_results_file: &Option<PathBuf>,
 ) -> io::Result<OutputLocation<Box<dyn Write>>> {
     let output: OutputLocation<Box<dyn Write>> = match test_results_file {
@@ -299,7 +299,7 @@ fn on_test_event(
 /// A simple console test runner.
 /// Runs provided tests reporting process and results to the stdout.
 pub fn run_tests_console(opts: &TestOpts, tests: Vec<TestDescAndFn>) -> io::Result<bool> {
-    let output = build_output(&opts.test_results_file)?;
+    let output = build_test_output(&opts.test_results_file)?;
 
     let max_name_len = tests
         .iter()
